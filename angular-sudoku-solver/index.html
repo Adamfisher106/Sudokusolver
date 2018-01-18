@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html ng-app="sudokuSolver">
+<head>
+	<meta charset="utf-8">
+	<title>{{'SUDOKU_SOLVER'| translate}}</title>
+        <link rel="shortcut icon" href="">
+        
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+        
+	<script src="js/lib/angular.min.js"></script>
+        <script
+            src="js/lib/bower-angular-translate-2.8.1/angular-translate.min.js">
+        </script>
+        <script
+            src="js/lib/angular-ui-bootstrap-0.14.3/ui-bootstrap-tpls-0.14.3.min.js">
+        </script>
+        
+        <script src="js/app.js"></script>
+        <script src="js/services.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/translations.js"></script>
+        
+        <script src="js/services/sudoku-svc.js"></script>
+        
+        <script src="js/controllers/sudoku-ctrl.js"></script>
+</head>
+<body ng-controller="SudokuCtrl">
+ 
+    <form class="form-inline" role="form">
+        <div class="form-group">
+            <label for="sudoku-size">{{'SUDOKU_SIZE' | translate}}:</label>
+             <select id="sudoku-size" class="form-control"
+                     ng-model="selectedSudokuSize" ng-change="init(false)">
+                <option value="4">4&times;4</option>
+                <option value="9">9&times;9</option>
+                <option value="16">16&times;16</option>
+             </select>           
+        </div>
+        <div class="form-group">
+            <label for="language">{{'LANGUAGE' | translate}}:</label>
+            <select id="language" class="form-control"
+                    ng-model="selectedLanguage" ng-change="changeLanguage()">
+                <option value="en">English</option>
+                <option value="fi">Suomi</option>
+            </select>
+        </div>
+    </form>
+
+    <table>
+        <tr ng-repeat="row in sudoku track by $index"
+            ng-class="{'firstChild': firstChild($index),
+                       'nthChild': nthChild($index)}">
+             <td ng-repeat="column in row track by $index"
+                 ng-class="{'firstChild': firstChild($index),
+                            'nthChild': nthChild($index)}">
+                <button class="btn btn-link btn-block input-button"
+                       ng-bind="sudoku[$parent.$index][$index] > 0 ?
+                                sudoku[$parent.$index][$index] : ''" 
+                       ng-click="openPopover($parent.$index, $index)"
+                       popover-placement="bottom"
+                       popover-is-open="isPopoverOpen($parent.$index, $index)"
+                       uib-popover-template="sudokuPopover.templateUrl">
+                </button>
+            </td>           
+        </tr>
+    </table>
+
+    <button class="main-button" title="{{'DESCRIPTION_SOLVE'| translate}}"
+            ng-click="solveIfPossible()">
+        {{'SOLVE'| translate}}
+    </button>
+    <button class="main-button" title="{{'DESCRIPTION_CLEAR'| translate}}"
+            ng-click="init(true)">
+        {{'CLEAR'| translate}}
+    </button>
+    <button class="main-button" title="{{'DESCRIPTION_UNDO'| translate}}"
+            ng-click="undo()">
+        {{'UNDO'| translate}}
+    </button>
+    
+    <script id="popoverTemplate.html" type="text/ng-template">
+        <table id="inputGrid">
+            <tr>
+                <button class="btn btn-default btn-block" 
+                        ng-click="insertValue(0)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </tr>
+            <tr ng-repeat="row in sudokuPopover.inputGrid">
+                <td ng-repeat="col in row">
+                    <button class="btn btn-default btn-block"
+                            ng-click="insertValue(col)">{{col}}</button>
+                </td>
+            </tr>
+        </table>
+    </script>
+
+</body>
+</html>

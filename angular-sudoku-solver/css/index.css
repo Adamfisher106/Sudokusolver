@@ -1,0 +1,66 @@
+﻿body {
+    text-align: center;
+}
+
+table {
+    margin: 1em auto;
+}
+td {
+    border: 1px solid;
+    text-align: center;
+}
+
+#inputGrid {
+    margin: auto;
+}
+
+#inputGrid td {
+    border: none;
+}
+
+tr.firstChild {
+    border-top: solid;
+}
+tr.nthChild td {
+   border-bottom: solid;
+}
+
+td.firstChild {
+    border-left: solid;
+}
+td.nthChild {
+    border-right: solid;
+}
+
+.input-button, .main-button {
+    color: #000000;
+}
+
+.input-button {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    width: 2.5em;
+    height: 2.5em;
+    font-size: 16px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.input-button:hover {
+    text-decoration: none;
+}
+
+.main-button {
+    background-color: rgb(255, 165, 0);
+    border: 1px ridge #666666;
+    box-shadow: 1px 1px 2px #000000;
+}
+
+.main-button:active {
+    box-shadow: none;
+}
+
+.glyphicon-remove {
+    color: #ff0000;
+}
